@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر DH - سوريا | بروفايل متكامل</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', system-ui, sans-serif; }
+        body { background: linear-gradient(145deg, #f5f7fc 0%, #eef2f8 100%); color: #1a2c3e; padding: 20px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes successBounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            background: white; 
+            padding: 15px 30px; 
+            border-radius: 60px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); 
+            margin-bottom: 30px; 
+            flex-wrap: wrap; 
+            gap: 15px; 
+        }
+        
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #2b6e9e, #1e3c5c); 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            color: transparent; 
+            animation: pulse 2s infinite;
+        }
+        
+        .cart-icon, .admin-btn, .profile-btn, .orders-btn, .wishlist-btn { 
+            background: #1e3c5c; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 40px; 
+            display: inline-flex; 
+            gap: 10px; 
+            align-items: center; 
+            cursor: pointer; 
+            font-weight: bold; 
+            margin-right: 10px; 
+            border: none;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .cart-icon:hover, .admin-btn:hover, .profile-btn:hover, .orders-btn:hover, .wishlist-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .admin-btn { background: #c0392b; }
+        .profile-btn { background: #27ae60; }
+        .orders-btn { background: #f39c12; }
+        .wishlist-btn { background: #e74c3c; }
+        
+        .search-filter-bar {
+            background: white;
+            border-radius: 60px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .search-input, .filter-select {
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 2px solid #e0e0e0;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus, .filter-select:focus {
+            border-color: #2b6e9e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(43,110,158,0.1);
+        }
+        
+        .products-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 30px; 
+            margin-bottom: 40px; 
+        }
+        
+        .product-card { 
+            background: white; 
+            border-radius: 32px; 
+            padding: 20px; 
+            text-align: center; 
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1); 
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease;
+            position: relative;
+        }
+        
+        .product-card:hover { 
+            transform: translateY(-5px);
+            box-shadow: 0 25px 40px -15px rgba(0,0,0,0.2);
+        }
+        
+        .product-img-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-img { 
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-card:hover .product-img {
+            transform: scale(1.1);
+        }
+        
+        .product-img-placeholder {
+            font-size: 4rem;
+            color: #95a5a6;
+        }
+        
+        .product-title { 
+            font-size: 1.3rem; 
+            font-weight: bold; 
+            margin: 10px 0; 
+        }
+        
+        .product-price { 
+            color: #2b6e9e; 
+            font-weight: bold; 
+            font-size: 1.4rem; 
+            margin: 10px 0; 
+        }
+        
+        .product-rating {
+            color: #f1c40f;
+            margin: 10px 0;
+        }
+        
+        .wishlist-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+        
+        .wishlist-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .wishlist-icon.active {
+            color: #e74c3c;
+        }
+        
+        button { 
+            background: #2b6e9e; 
+            border: none; 
+            color: white; 
+            padding: 10px 20px; 
+            border-radius: 40px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            width: 100%; 
+            font-size: 1rem; 
+            transition: all 0.3s ease;
+        }
+        
+        button:hover { 
+            background: #1e4a6e;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .modal { 
+            display: none; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: rgba(0,0,0,0.5); 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 1000; 
+        }
+        
+        .modal-content { 
+            background: white; 
+            width: 90%; 
+            max-width: 700px; 
+            border-radius: 40px; 
+            padding: 25px; 
+            max-height: 80vh; 
+            overflow-y: auto; 
+            animation: slideUp 0.3s ease;
+        }
+        
+        .cart-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            border-bottom: 1px solid #ddd; 
+            padding: 12px 0; 
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .total { 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            margin: 20px 0; 
+            text-align: left; 
+        }
+        
+        .checkout-btn { background: #27ae60; margin-top: 15px; }
+        
+        /* أنماط طرق الدفع */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .payment-method-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .payment-method-card:hover {
+            border-color: #2b6e9e;
+            background: #f0f8ff;
+            transform: translateY(-3px);
+        }
+        
+        .payment-method-card.selected {
+            border-color: #27ae60;
+            background: #f0fff4;
+            box-shadow: 0 5px 20px rgba(39,174,96,0.2);
+        }
+        
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .payment-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+        
+        .payment-details {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .payment-info-highlight {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .copy-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            width: auto;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .copy-btn:hover {
+            background: #2980b9;
+        }
+        
+        .success-animation {
+            animation: successBounce 0.5s ease;
+            font-size: 4rem;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .order-summary {
+            background: #f0f8ff;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .auth-section { 
+            background: white; 
+            border-radius: 32px; 
+            padding: 30px; 
+            margin-top: 20px; 
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+            max-width: 500px;
+            margin: 20px auto;
+            animation: slideIn 0.5s ease;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-radius: 40px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            cursor: pointer;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            background: white;
+            border: none;
+            width: auto;
+        }
+        
+        .auth-tab.active {
+            background: #2b6e9e;
+            color: white;
+        }
+        
+        .auth-input, .address-input, .address-select, .profile-input { 
+            padding: 12px 20px; 
+            margin: 8px 0; 
+            border-radius: 60px; 
+            border: 2px solid #e0e0e0; 
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-input:focus, .profile-input:focus {
+            border-color: #2b6e9e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(43,110,158,0.1);
+        }
+        
+        textarea.profile-input {
+            border-radius: 20px;
+            resize: vertical;
+        }
+        
+        .form-group {
+            margin: 15px 0;
+            text-align: right;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            text-align: right;
+        }
+        
+        .user-greeting { 
+            background: #e9f0f5; 
+            padding: 12px 20px; 
+            border-radius: 60px; 
+            display: inline-block; 
+        }
+        
+        .logout-btn { 
+            background: #c0392b; 
+            width: auto; 
+            padding: 6px 18px; 
+            margin-right: 12px; 
+        }
+        
+        .users-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 15px; 
+        }
+        
+        .users-table th, .users-table td { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            text-align: right; 
+        }
+        
+        .users-table th { 
+            background: #2b6e9e; 
+            color: white; 
+        }
+        
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2b6e9e;
+        }
+        
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        .badge {
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 8px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        
+        .image-upload-container {
+            border: 2px dashed #bdc3c7;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .image-upload-container:hover {
+            border-color: #2b6e9e;
+            background: #f0f4f8;
+        }
+        
+        .image-upload-container.has-image {
+            border-style: solid;
+            border-color: #27ae60;
+            padding: 10px;
+        }
+        
+        .upload-placeholder {
+            color: #95a5a6;
+            font-size: 1.1rem;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            object-fit: contain;
+        }
+        
+        .remove-image-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            z-index: 2;
+        }
+        
+        .comments-section {
+            margin-top: 30px;
+            text-align: right;
+        }
+        
+        .comment-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px 0;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .comment-user {
+            font-weight: bold;
+            color: #2b6e9e;
+        }
+        
+        .comment-date {
+            font-size: 0.8rem;
+            color: #95a5a6;
+        }
+        
+        .comment-text {
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+        
+        .comment-stars {
+            color: #f1c40f;
+            margin-bottom: 5px;
+        }
+        
+        .add-comment-section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .star-rating {
+            font-size: 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .star-rating .star {
+            transition: transform 0.2s, color 0.2s;
+        }
+        
+        .star-rating .star:hover {
+            transform: scale(1.3);
+        }
+        
+        .comments-count {
+            background: #2b6e9e;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 10px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        
+        .telegram-settings {
+            background: #f0f8ff;
+            border: 2px solid #0088cc;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: right;
+        }
+        
+        .telegram-settings h3 {
+            color: #0088cc;
+            margin-bottom: 15px;
+        }
+        
+        .telegram-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-right: 10px;
+        }
+        
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* شريط التقدم */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-circle {
+            background: #2b6e9e;
+        }
+        
+        .step.completed .step-circle {
+            background: #27ae60;
+        }
+        
+        .step-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+        
+        footer { 
+            text-align: center; 
+            margin-top: 50px; 
+            color: #6c7a89;
+            padding: 20px;
+        }
+        
+        .required-star {
+            color: #e74c3c;
+            margin-right: 3px;
+        }
+        
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .qty-btn {
+            background: #2b6e9e;
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 0;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 600px) { 
+            header { flex-direction: column; }
+            .search-filter-bar { flex-direction: column; }
+            .auth-section { padding: 20px; }
+            .payment-methods { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">🛍️ متجر DH - سوريا</div>
+    <div>
+        <span id="userDisplay" style="margin-left: 15px;"></span>
+        <button id="wishlistBtn" class="wishlist-btn" style="display:none;">❤️ المفضلة <span class="badge" id="wishlistCount">0</span></button>
+        <button id="ordersBtn" class="orders-btn" style="display:none;">📋 طلباتي</button>
+        <button id="profileBtn" class="profile-btn" style="display:none;">👤 بروفايلي</button>
+        <button id="adminBtn" class="admin-btn" style="display:none;">👑 لوحة الأدمن</button>
+        <div class="cart-icon" id="openCartBtn">🛒 سلة (<span id="cartCount">0</span>)</div>
+    </div>
+</header>
+
+<!-- شريط البحث والتصفية -->
+<div class="search-filter-bar">
+    <input type="text" id="searchInput" placeholder="🔍 بحث عن منتج..." class="search-input">
+    <select id="sortSelect" class="filter-select">
+        <option value="default">ترتيب افتراضي</option>
+        <option value="price-asc">السعر: من الأقل للأعلى</option>
+        <option value="price-desc">السعر: من الأعلى للأقل</option>
+        <option value="name">الاسم</option>
+        <option value="rating">التقييم</option>
+    </select>
+</div>
+
+<!-- شريط الإحصائيات -->
+<div class="stats-bar" id="statsBar">
+    <div class="stat-card">
+        <div class="stat-value" id="totalProducts">0</div>
+        <div class="stat-label">منتج</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="totalOrders">0</div>
+        <div class="stat-label">طلب مكتمل</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value" id="totalUsers">0</div>
+        <div class="stat-label">مستخدم مسجل</div>
+    </div>
+</div>
+
+<div class="products-grid" id="productsContainer"></div>
+
+<!-- مودال السلة -->
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <h2>🛍️ سلة المشتريات</h2>
+        <div id="cartItemsList"></div>
+        <div class="total">المجموع: <span id="cartTotal">0</span> ل.س</div>
+        <button id="proceedToPaymentBtn" class="checkout-btn">💳 متابعة للدفع</button>
+        <button id="clearCartBtn" style="background:#e67e22; margin-top:10px;">🗑️ إفراغ السلة</button>
+        <button id="closeCartBtn" style="background:#aaa; margin-top:10px;">إغلاق</button>
+    </div>
+</div>
+
+<!-- مودال اختيار طريقة الدفع -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <h2>💳 اختر طريقة الدفع</h2>
+        
+        <!-- شريط التقدم -->
+        <div class="progress-steps">
+            <div class="step completed">
+                <div class="step-circle">✓</div>
+                <span class="step-label">السلة</span>
+            </div>
+            <div class="step active">
+                <div class="step-circle">2</div>
+                <span class="step-label">الدفع</span>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <span class="step-label">تأكيد</span>
+            </div>
+        </div>
+        
+        <div class="order-summary">
+            <h3>📋 ملخص الطلب</h3>
+            <div id="orderSummaryItems"></div>
+            <div class="order-summary-item" style="font-weight:bold; font-size:1.2rem; margin-top:10px;">
+                <span>الإجمالي:</span>
+                <span id="paymentTotal">0</span> ل.س
+            </div>
+        </div>
+        
+        <h3 style="margin-top:20px;">طرق الدفع المتاحة:</h3>
+        <div class="payment-methods">
+            <div class="payment-method-card" onclick="selectPaymentMethod('shamcash')" id="shamcashCard">
+                <div class="payment-icon">💚</div>
+                <div class="payment-name">شام كاش</div>
+                <small style="color:#7f8c8d;">تحويل مباشر</small>
+            </div>
+            <div class="payment-method-card" onclick="selectPaymentMethod('syriatel')" id="syriatelCard">
+                <div class="payment-icon">📱</div>
+                <div class="payment-name">سيريتل كاش</div>
+                <small style="color:#7f8c8d;">محفظة إلكترونية</small>
+            </div>
+            <div class="payment-method-card" onclick="selectPaymentMethod('mtn')" id="mtnCard">
+                <div class="payment-icon">📲</div>
+                <div class="payment-name">MTN كاش</div>
+                <small style="color:#7f8c8d;">محفظة إلكترونية</small>
+            </div>
+            <div class="payment-method-card" onclick="selectPaymentMethod('bank')" id="bankCard">
+                <div class="payment-icon">🏦</div>
+                <div class="payment-name">تحويل بنكي</div>
+                <small style="color:#7f8c8d;">حوالة مصرفية</small>
+            </div>
+            <div class="payment-method-card" onclick="selectPaymentMethod('cod')" id="codCard">
+                <div class="payment-icon">💵</div>
+                <div class="payment-name">الدفع عند الاستلام</div>
+                <small style="color:#7f8c8d;">نقداً عند التوصيل</small>
+            </div>
+        </div>
+        
+        <div id="paymentDetailsContainer"></div>
+        
+        <button id="confirmPaymentBtn" class="checkout-btn" disabled>✅ تأكيد الطلب وإرساله</button>
+        <button id="backToCartBtn" style="background:#aaa; margin-top:10px;">↩️ العودة للسلة</button>
+    </div>
+</div>
+
+<!-- مودال تأكيد الطلب -->
+<div id="orderSuccessModal" class="modal">
+    <div class="modal-content" style="text-align:center;">
+        <div class="success-animation">🎉</div>
+        <h2>✅ تم استلام طلبك بنجاح!</h2>
+        <p style="margin:20px 0; font-size:1.1rem;">رقم الطلب: <strong id="orderNumber">#0001</strong></p>
+        <div id="paymentInstructions" style="background:#f0f8ff; border-radius:20px; padding:20px; margin:20px 0; text-align:right;"></div>
+        <p style="color:#7f8c8d;">سيتم التواصل معك عبر الهاتف لتأكيد الطلب</p>
+        <button id="closeSuccessBtn" style="background:#27ae60; margin-top:20px;">✅ حسناً، متابعة التسوق</button>
+    </div>
+</div>
+
+<!-- مودال البروفايل -->
+<div id="profileModal" class="modal">
+    <div class="modal-content">
+        <h2>👤 بروفايلي الشخصي</h2>
+        <div class="profile-details">
+            <div>
+                <label>📸 صورة الملف:</label>
+                <div class="image-upload-container" id="profileImageContainer" onclick="document.getElementById('profileAvatar').click()">
+                    <span class="upload-icon">📷</span>
+                    <span class="upload-placeholder">انقر لرفع صورة</span>
+                    <input type="file" id="profileAvatar" accept="image/*" style="display:none;" onchange="handleProfileImageUpload(event)">
+                </div>
+            </div>
+            <div><label>الاسم الكامل:</label><input type="text" id="profileName" placeholder="الاسم الكامل" class="profile-input"></div>
+            <div><label>البريد الإلكتروني:</label><input type="email" id="profileEmail" placeholder="البريد الإلكتروني" class="profile-input"></div>
+            <div><label><span class="required-star">*</span> رقم الهاتف:</label><input type="text" id="profilePhone" placeholder="رقم الهاتف" class="profile-input"></div>
+            <div><label><span class="required-star">*</span> المحافظة:</label>
+                <select id="profileGov" class="profile-input">
+                    <option value="">-- المحافظة --</option>
+                    <option value="دمشق">دمشق</option><option value="ريف دمشق">ريف دمشق</option><option value="حلب">حلب</option>
+                    <option value="حمص">حمص</option><option value="حماة">حماة</option><option value="اللاذقية">اللاذقية</option>
+                    <option value="طرطوس">طرطوس</option><option value="دير الزور">دير الزور</option><option value="الحسكة">الحسكة</option>
+                    <option value="القامشلي">القامشلي</option><option value="إدلب">إدلب</option><option value="السويداء">السويداء</option>
+                    <option value="درعا">درعا</option><option value="القنيطرة">القنيطرة</option><option value="الرقة">الرقة</option>
+                </select>
+            </div>
+            <div><label><span class="required-star">*</span> الحي / القرية:</label><input type="text" id="profileVillage" placeholder="الحي / القرية" class="profile-input"></div>
+            <div><label>المنطقة:</label><input type="text" id="profileArea" placeholder="المنطقة" class="profile-input"></div>
+            <div><label>العنوان التفصيلي:</label><input type="text" id="profileAddress" placeholder="شارع - بناء - طابق" class="profile-input"></div>
+            <div><label>تاريخ الميلاد:</label><input type="date" id="profileBirthdate" class="profile-input"></div>
+            <div><label>ملاحظات إضافية:</label><textarea id="profileNotes" placeholder="أي معلومات إضافية للتوصيل" class="profile-input" rows="3"></textarea></div>
+        </div>
+        <button id="saveProfileBtn">💾 حفظ التعديلات</button>
+        <button id="closeProfileBtn" style="background:#aaa; margin-top:10px;">إغلاق</button>
+    </div>
+</div>
+
+<!-- باقي المودالات (المفضلة، الطلبات، التعليقات، الأدمن، إضافة منتج) تبقى كما هي -->
+<div id="wishlistModal" class="modal">
+    <div class="modal-content"><h2>❤️ قائمة المفضلة</h2><div id="wishlistItems"></div><button id="closeWishlistBtn" style="background:#aaa; margin-top:10px;">إغلاق</button></div>
+</div>
+
+<div id="ordersModal" class="modal">
+    <div class="modal-content"><h2>📋 طلباتي السابقة</h2><div id="ordersList"></div><button id="closeOrdersBtn" style="background:#aaa; margin-top:10px;">إغلاق</button></div>
+</div>
+
+<div id="commentsModal" class="modal">
+    <div class="modal-content">
+        <h2>💬 التعليقات والتقييمات</h2>
+        <div id="commentsProductInfo"></div>
+        <div class="add-comment-section" id="addCommentSection">
+            <h3>✍️ أضف تعليقك</h3>
+            <div class="star-rating" id="commentStarRating">
+                <span class="star" data-rating="1">⭐</span><span class="star" data-rating="2">⭐</span><span class="star" data-rating="3">⭐</span><span class="star" data-rating="4">⭐</span><span class="star" data-rating="5">⭐</span>
+            </div>
+            <textarea id="commentText" placeholder="اكتب تعليقك هنا..." class="profile-input" rows="3"></textarea>
+            <button id="submitCommentBtn" style="background:#27ae60; margin-top:10px;">📤 نشر التعليق</button>
+        </div>
+        <div class="comments-section" id="commentsList"><h3>📝 التعليقات</h3><div id="commentsContainer"></div></div>
+        <button id="closeCommentsBtn" style="background:#aaa; margin-top:10px;">إغلاق</button>
+    </div>
+</div>
+
+<div id="adminModal" class="modal">
+    <div class="modal-content">
+        <h2>👑 لوحة تحكم الأدمن</h2>
+        <div class="telegram-settings">
+            <h3>🤖 إعدادات تيليجرام</h3>
+            <div class="form-group"><label>توكن البوت:</label><input type="text" id="telegramToken" placeholder="أدخل توكن البوت" class="profile-input"></div>
+            <div class="form-group"><label>معرف الشات (Chat ID):</label><input type="text" id="telegramChatId" placeholder="أدخل معرف الشات" class="profile-input"></div>
+            <button id="saveTelegramSettingsBtn" style="background:#0088cc;">💾 حفظ الإعدادات</button>
+            <button id="testTelegramBtn" style="background:#f39c12; margin-top:10px;">📤 اختبار الاتصال</button>
+            <p id="telegramStatus" style="margin-top:10px;"></p>
+        </div>
+        
+        <!-- إعدادات حسابات الدفع -->
+        <div class="telegram-settings" style="border-color:#27ae60; margin-top:20px;">
+            <h3>💳 حسابات الدفع (تظهر للعملاء)</h3>
+            <div class="form-group"><label>رقم شام كاش:</label><input type="text" id="adminShamcash" placeholder="أدخل رقم شام كاش" class="profile-input"></div>
+            <div class="form-group"><label>رقم سيريتل كاش:</label><input type="text" id="adminSyriatel" placeholder="أدخل رقم سيريتل كاش" class="profile-input"></div>
+            <div class="form-group"><label>رقم MTN كاش:</label><input type="text" id="adminMtn" placeholder="أدخل رقم MTN كاش" class="profile-input"></div>
+            <div class="form-group"><label>معلومات الحساب البنكي:</label><textarea id="adminBank" placeholder="اسم البنك - رقم الحساب - اسم صاحب الحساب" class="profile-input" rows="3"></textarea></div>
+            <button id="savePaymentAccountsBtn" style="background:#27ae60;">💾 حفظ حسابات الدفع</button>
+        </div>
+        
+        <div class="stats-bar" style="margin-bottom:20px;">
+            <div class="stat-card"><div class="stat-value" id="adminTotalUsers">0</div><div class="stat-label">مستخدم</div></div>
+            <div class="stat-card"><div class="stat-value" id="adminTotalOrders">0</div><div class="stat-label">طلب</div></div>
+        </div>
+        <div style="text-align:center; margin:20px 0;">
+            <button onclick="document.getElementById('adminModal').style.display='none'; document.getElementById('addProductModal').style.display='flex';" style="background:#27ae60; width:auto; padding:15px 30px; font-size:1.1rem;">➕ إضافة منتج جديد</button>
+        </div>
+        <h3>📋 جميع المستخدمين المسجلين</h3>
+        <div id="usersListContainer" style="overflow-x:auto;"></div>
+        <button id="exportUsersBtn" style="background:#3498db; margin-top:10px;">📥 تصدير البيانات</button>
+        <button id="closeAdminBtn" style="background:#aaa; margin-top:10px;">إغلاق</button>
+    </div>
+</div>
+
+<div id="addProductModal" class="modal">
+    <div class="modal-content">
+        <h2>📦 إضافة منتج جديد</h2>
+        <div class="form-group"><label>📸 صورة المنتج:</label>
+            <div class="image-upload-container" id="productImageContainer" onclick="document.getElementById('newProductImage').click()">
+                <span class="upload-icon" id="uploadIcon">🖼️</span><span class="upload-placeholder" id="uploadText">انقر هنا لرفع صورة المنتج</span><span class="file-info" id="fileInfo">الصيغ المدعومة: JPG, PNG, GIF, WebP</span>
+                <input type="file" id="newProductImage" accept="image/*" style="display:none;" onchange="handleProductImageUpload(event)">
+            </div>
+            <button id="removeProductImageBtn" class="remove-image-btn" style="display:none;" onclick="removeProductImage(event)">✕</button>
+        </div>
+        <div class="form-group"><label><span class="required-star">*</span> اسم المنتج:</label><input type="text" id="newProductName" class="profile-input" placeholder="أدخل اسم المنتج"></div>
+        <div class="form-group"><label><span class="required-star">*</span> السعر (ل.س):</label><input type="number" id="newProductPrice" class="profile-input" placeholder="أدخل السعر" min="0"></div>
+        <div class="form-group"><label>الفئة:</label><select id="newProductCategory" class="profile-input"><option value="إلكترونيات">إلكترونيات</option><option value="حقائب">حقائب</option><option value="قرطاسية">قرطاسية</option><option value="إكسسوارات">إكسسوارات</option><option value="ملابس">ملابس</option><option value="أخرى">أخرى</option></select></div>
+        <div class="form-group"><label>المخزون:</label><input type="number" id="newProductStock" class="profile-input" placeholder="الكمية المتاحة" value="10" min="0"></div>
+        <div class="form-group"><label>وصف المنتج (اختياري):</label><textarea id="newProductDescription" class="profile-input" placeholder="وصف مختصر للمنتج..." rows="3"></textarea></div>
+        <button id="saveNewProductBtn" style="background:#27ae60;">💾 حفظ المنتج</button>
+        <button id="closeAddProductBtn" style="background:#aaa; margin-top:10px;">إغلاق</button>
+    </div>
+</div>
+
+<!-- تسجيل الدخول -->
+<div class="auth-section" id="authSection"></div>
+
+<footer>© 2026 متجر DH — التوصيل لجميع المحافظات السورية | 💚 شام كاش وجميع طرق الدفع متاحة</footer>
+
+<script>
+    // ========== الإعدادات العامة ==========
+    let TELEGRAM_BOT_TOKEN = localStorage.getItem('telegram_bot_token') || "";
+    let ADMIN_CHAT_ID = localStorage.getItem('telegram_chat_id') || "";
+    
+    // حسابات الدفع الافتراضية
+    let paymentAccounts = {
+        shamcash: "0999123456",
+        syriatel: "0999234567",
+        mtn: "0999345678",
+        bank: "البنك التجاري السوري\nرقم الحساب: 123456789\nاسم المستفيد: متجر DH"
+    };
+    
+    // تحميل حسابات الدفع المحفوظة
+    const savedPaymentAccounts = localStorage.getItem('payment_accounts');
+    if(savedPaymentAccounts) {
+        paymentAccounts = JSON.parse(savedPaymentAccounts);
+    }
+
+    const ADMIN_USERNAME = "admin";
+    const ADMIN_PASSWORD = "admin123";
+
+    let products = [
+        { id: 1, name: "سماعة لاسلكية", price: 45000, image: "", rating: 4, category: "إلكترونيات", stock: 15, description: "" },
+        { id: 2, name: "ساعة رياضية", price: 89000, image: "", rating: 5, category: "إلكترونيات", stock: 10, description: "" },
+        { id: 3, name: "حقيبة ظهر", price: 55000, image: "", rating: 4, category: "حقائب", stock: 20, description: "" },
+        { id: 4, name: "قلم ذكي", price: 25000, image: "", rating: 3, category: "قرطاسية", stock: 30, description: "" },
+        { id: 5, name: "سوار ذكي", price: 65000, image: "", rating: 4, category: "إلكترونيات", stock: 12, description: "" },
+        { id: 6, name: "نظارات شمسية", price: 35000, image: "", rating: 5, category: "إكسسوارات", stock: 25, description: "" }
+    ];
+
+    let currentUser = null;
+    let cart = [];
+    let wishlist = [];
+    let ordersHistory = [];
+    let currentReviewProductId = null;
+    let productIdCounter = 7;
+    let tempProductImage = null;
+    let commentRating = 0;
+    let selectedPaymentMethod = null;
+    let orderCounter = parseInt(localStorage.getItem('order_counter') || '1000');
+
+    // ========== نظام الدفع ==========
+    function selectPaymentMethod(method) {
+        selectedPaymentMethod = method;
+        
+        // إزالة التحديد من جميع البطاقات
+        document.querySelectorAll('.payment-method-card').forEach(card => {
+            card.classList.remove('selected');
+        });
+        
+        // تحديد البطاقة المختارة
+        document.getElementById(method + 'Card').classList.add('selected');
+        
+        // عرض تفاصيل الدفع
+        showPaymentDetails(method);
+        
+        // تفعيل زر التأكيد
+        document.getElementById('confirmPaymentBtn').disabled = false;
+    }
+    
+    function showPaymentDetails(method) {
+        const container = document.getElementById('paymentDetailsContainer');
+        let details = '';
+        
+        switch(method) {
+            case 'shamcash':
+                details = `
+                    <div class="payment-details">
+                        <h4>💚 الدفع عبر شام كاش</h4>
+                        <p>قم بتحويل المبلغ إلى رقم شام كاش التالي:</p>
+                        <div class="payment-info-highlight">
+                            📱 رقم شام كاش: <span id="shamcashNumber">${paymentAccounts.shamcash}</span>
+                            <br><button class="copy-btn" onclick="copyToClipboard('${paymentAccounts.shamcash}')">📋 نسخ الرقم</button>
+                        </div>
+                        <p style="color:#e67e22; margin-top:10px;">⚠️ بعد التحويل، سيتم تأكيد طلبك تلقائياً</p>
+                    </div>
+                `;
+                break;
+            case 'syriatel':
+                details = `
+                    <div class="payment-details">
+                        <h4>📱 الدفع عبر سيريتل كاش</h4>
+                        <p>قم بتحويل المبلغ إلى رقم سيريتل كاش التالي:</p>
+                        <div class="payment-info-highlight">
+                            📱 رقم سيريتل كاش: <span id="syriatelNumber">${paymentAccounts.syriatel}</span>
+                            <br><button class="copy-btn" onclick="copyToClipboard('${paymentAccounts.syriatel}')">📋 نسخ الرقم</button>
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'mtn':
+                details = `
+                    <div class="payment-details">
+                        <h4>📲 الدفع عبر MTN كاش</h4>
+                        <p>قم بتحويل المبلغ إلى رقم MTN كاش التالي:</p>
+                        <div class="payment-info-highlight">
+                            📱 رقم MTN كاش: <span id="mtnNumber">${paymentAccounts.mtn}</span>
+                            <br><button class="copy-btn" onclick="copyToClipboard('${paymentAccounts.mtn}')">📋 نسخ الرقم</button>
+                        </div>
+                    </div>
+                `;
+                break;
+            case 'bank':
+                details = `
+                    <div class="payment-details">
+                        <h4>🏦 التحويل البنكي</h4>
+                        <p>معلومات الحساب البنكي:</p>
+                        <div class="payment-info-highlight" style="white-space:pre-line;">
+                            ${paymentAccounts.bank}
+                        </div>
+                        <button class="copy-btn" onclick="copyToClipboard('${paymentAccounts.bank.replace(/\n/g, ' ')}')">📋 نسخ المعلومات</button>
+                    </div>
+                `;
+                break;
+            case 'cod':
+                details = `
+                    <div class="payment-details">
+                        <h4>💵 الدفع عند الاستلام</h4>
+                        <p style="color:#27ae60;">✓ ستدفع المبلغ نقداً عند استلام طلبك</p>
+                        <p style="color:#e67e22;">⚠️ رسوم إضافية: 5,000 ل.س</p>
+                    </div>
+                `;
+                break;
+        }
+        
+        container.innerHTML = details;
+    }
+    
+    window.copyToClipboard = function(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("✅ تم النسخ إلى الحافظة", "#27ae60");
+        }).catch(() => {
+            showToast("❌ فشل النسخ", "#e74c3c");
+        });
+    };
+    
+    function proceedToPayment() {
+        if(!currentUser) { showToast("🔐 الرجاء تسجيل الدخول", "#c0392b"); return; }
+        if(cart.length === 0) { showToast("السلة فارغة", "#e67e22"); return; }
+        
+        const profile = getUserProfile(currentUser.username);
+        if(!profile.gov || !profile.village || !profile.phone) {
+            showToast("⚠️ الرجاء إكمال بيانات البروفايل أولاً", "#e67e22");
+            document.getElementById('profileModal').style.display = 'flex';
+            return;
+        }
+        
+        // عرض ملخص الطلب
+        const total = cart.reduce((s,i)=> s + (i.price * i.quantity), 0);
+        document.getElementById('paymentTotal').innerText = total.toLocaleString();
+        
+        const summaryContainer = document.getElementById('orderSummaryItems');
+        summaryContainer.innerHTML = cart.map(item => `
+            <div class="order-summary-item">
+                <span>${item.name} ×${item.quantity}</span>
+                <span>${(item.price * item.quantity).toLocaleString()} ل.س</span>
+            </div>
+        `).join('');
+        
+        // إعادة تعيين طريقة الدفع
+        selectedPaymentMethod = null;
+        document.querySelectorAll('.payment-method-card').forEach(card => card.classList.remove('selected'));
+        document.getElementById('paymentDetailsContainer').innerHTML = '<p style="text-align:center; color:#95a5a6;">الرجاء اختيار طريقة الدفع</p>';
+        document.getElementById('confirmPaymentBtn').disabled = true;
+        
+        document.getElementById('cartModal').style.display = 'none';
+        document.getElementById('paymentModal').style.display = 'flex';
+    }
+    
+    async function confirmOrder() {
+        if(!selectedPaymentMethod) {
+            showToast("❌ الرجاء اختيار طريقة الدفع", "#e74c3c");
+            return;
+        }
+        
+        const profile = getUserProfile(currentUser.username);
+        const total = cart.reduce((s,i)=> s + (i.price * i.quantity), 0);
+        const codFee = selectedPaymentMethod === 'cod' ? 5000 : 0;
+        const finalTotal = total + codFee;
+        const orderNumber = orderCounter++;
+        localStorage.setItem('order_counter', orderCounter);
+        
+        const itemsList = cart.map(i => `• ${i.name} ×${i.quantity} = ${(i.price * i.quantity).toLocaleString()} ل.س`).join('\n');
+        
+        // أسماء طرق الدفع بالعربية
+        const paymentNames = {
+            'shamcash': 'شام كاش 💚',
+            'syriatel': 'سيريتل كاش 📱',
+            'mtn': 'MTN كاش 📲',
+            'bank': 'تحويل بنكي 🏦',
+            'cod': 'الدفع عند الاستلام 💵'
+        };
+        
+        // نص الطلب للإشعارات
+        const orderText = `🛍️ <b>طلب جديد #${orderNumber}</b>\n\n👤 <b>العميل:</b> ${profile.name}\n📞 <b>الهاتف:</b> ${profile.phone}\n📍 <b>العنوان:</b> ${profile.gov} - ${profile.village}${profile.area ? ' - ' + profile.area : ''}\n🏠 <b>تفصيلي:</b> ${profile.address || 'غير محدد'}\n\n📦 <b>المنتجات:</b>\n${itemsList}\n\n💰 <b>الإجمالي:</b> ${finalTotal.toLocaleString()} ل.س\n💳 <b>طريقة الدفع:</b> ${paymentNames[selectedPaymentMethod]}\n📝 <b>ملاحظات:</b> ${profile.notes || 'لا يوجد'}`;
+        
+        // إرسال إشعار تيليجرام
+        let telegramSent = false;
+        if(TELEGRAM_BOT_TOKEN && ADMIN_CHAT_ID) {
+            telegramSent = await sendTelegramMessage(ADMIN_CHAT_ID, orderText);
+        }
+        
+        // حفظ الطلب
+        ordersHistory.push({
+            orderNumber: orderNumber,
+            date: new Date().toISOString(),
+            items: [...cart],
+            total: finalTotal,
+            paymentMethod: selectedPaymentMethod,
+            status: telegramSent ? 'قيد المعالجة' : 'محفوظ محلياً'
+        });
+        
+        // عرض تعليمات الدفع
+        let instructions = '';
+        switch(selectedPaymentMethod) {
+            case 'shamcash':
+                instructions = `<p>💚 <strong>تعليمات الدفع عبر شام كاش:</strong></p>
+                    <p>1. قم بتحويل <strong>${finalTotal.toLocaleString()} ل.س</strong> إلى الرقم:</p>
+                    <div class="payment-info-highlight">${paymentAccounts.shamcash}</div>
+                    <p>2. سيتم تأكيد طلبك بعد استلام المبلغ</p>`;
+                break;
+            case 'syriatel':
+                instructions = `<p>📱 <strong>تعليمات الدفع عبر سيريتل كاش:</strong></p>
+                    <p>1. قم بتحويل <strong>${finalTotal.toLocaleString()} ل.س</strong> إلى الرقم:</p>
+                    <div class="payment-info-highlight">${paymentAccounts.syriatel}</div>`;
+                break;
+            case 'mtn':
+                instructions = `<p>📲 <strong>تعليمات الدفع عبر MTN كاش:</strong></p>
+                    <p>1. قم بتحويل <strong>${finalTotal.toLocaleString()} ل.س</strong> إلى الرقم:</p>
+                    <div class="payment-info-highlight">${paymentAccounts.mtn}</div>`;
+                break;
+            case 'bank':
+                instructions = `<p>🏦 <strong>تعليمات التحويل البنكي:</strong></p>
+                    <div class="payment-info-highlight" style="white-space:pre-line;">${paymentAccounts.bank}</div>
+                    <p>المبلغ: <strong>${finalTotal.toLocaleString()} ل.س</strong></p>`;
+                break;
+            case 'cod':
+                instructions = `<p>💵 <strong>الدفع عند الاستلام:</strong></p>
+                    <p>المبلغ المستحق: <strong>${finalTotal.toLocaleString()} ل.س</strong></p>
+                    <p>(يشمل ${codFee.toLocaleString()} ل.س رسوم الدفع عند الاستلام)</p>`;
+                break;
+        }
+        
+        document.getElementById('orderNumber').innerText = '#' + orderNumber;
+        document.getElementById('paymentInstructions').innerHTML = instructions;
+        
+        // تفريغ السلة
+        cart = [];
+        saveData();
+        updateAllUI();
+        
+        document.getElementById('paymentModal').style.display = 'none';
+        document.getElementById('orderSuccessModal').style.display = 'flex';
+        
+        showToast("✅ تم تأكيد طلبك بنجاح!", "#27ae60");
+    }
+    
+    // ========== نظام التعليقات ==========
+    const commentsKey = 'ecom_product_comments';
+    
+    function getComments() {
+        const stored = localStorage.getItem(commentsKey);
+        return stored ? JSON.parse(stored) : {};
+    }
+    
+    function saveComments(comments) {
+        localStorage.setItem(commentsKey, JSON.stringify(comments));
+    }
+    
+    function getProductComments(productId) {
+        const comments = getComments();
+        return comments[productId] || [];
+    }
+    
+    function addProductComment(productId, username, userName, rating, text) {
+        const comments = getComments();
+        if(!comments[productId]) comments[productId] = [];
+        
+        const newComment = {
+            id: Date.now(),
+            username: username,
+            userName: userName,
+            rating: rating,
+            text: text,
+            date: new Date().toISOString()
+        };
+        
+        comments[productId].unshift(newComment);
+        saveComments(comments);
+        updateProductRating(productId);
+        return newComment;
+    }
+    
+    function updateProductRating(productId) {
+        const comments = getProductComments(productId);
+        if(comments.length === 0) return;
+        const avgRating = comments.reduce((sum, c) => sum + c.rating, 0) / comments.length;
+        const product = products.find(p => p.id === productId);
+        if(product) {
+            product.rating = Math.round(avgRating);
+            saveData();
+        }
+    }
+    
+    function renderComments(productId) {
+        const container = document.getElementById('commentsContainer');
+        const comments = getProductComments(productId);
+        
+        if(comments.length === 0) {
+            container.innerHTML = '<p style="text-align:center; color:#95a5a6;">لا توجد تعليقات بعد. كن أول من يعلق! 💬</p>';
+            return;
+        }
+        
+        container.innerHTML = comments.map(comment => `
+            <div class="comment-card">
+                <div class="comment-header">
+                    <span class="comment-user">👤 ${comment.userName || comment.username}</span>
+                    <span class="comment-date">${new Date(comment.date).toLocaleDateString('ar-SY')}</span>
+                </div>
+                <div class="comment-stars">${'⭐'.repeat(comment.rating)}</div>
+                <div class="comment-text">${comment.text}</div>
+            </div>
+        `).join('');
+    }
+
+    // ========== وظائف تيليجرام ==========
+    function saveTelegramSettings() {
+        TELEGRAM_BOT_TOKEN = document.getElementById('telegramToken').value.trim();
+        ADMIN_CHAT_ID = document.getElementById('telegramChatId').value.trim();
+        localStorage.setItem('telegram_bot_token', TELEGRAM_BOT_TOKEN);
+        localStorage.setItem('telegram_chat_id', ADMIN_CHAT_ID);
+        showToast("✅ تم حفظ إعدادات التلجرام", "#27ae60");
+        updateTelegramStatus();
+    }
+    
+    function savePaymentAccountsSettings() {
+        paymentAccounts.shamcash = document.getElementById('adminShamcash').value.trim();
+        paymentAccounts.syriatel = document.getElementById('adminSyriatel').value.trim();
+        paymentAccounts.mtn = document.getElementById('adminMtn').value.trim();
+        paymentAccounts.bank = document.getElementById('adminBank').value.trim();
+        localStorage.setItem('payment_accounts', JSON.stringify(paymentAccounts));
+        showToast("✅ تم حفظ حسابات الدفع", "#27ae60");
+    }
+    
+    function updateTelegramStatus() {
+        const statusElement = document.getElementById('telegramStatus');
+        if(TELEGRAM_BOT_TOKEN && ADMIN_CHAT_ID) {
+            statusElement.innerHTML = '<span class="telegram-status status-active">✅ متصل</span> جاهز للإرسال';
+        } else {
+            statusElement.innerHTML = '<span class="telegram-status status-inactive">❌ غير مكتمل</span> الرجاء إدخال التوكن ومعرف الشات';
+        }
+    }
+    
+    async function testTelegramConnection() {
+        if(!TELEGRAM_BOT_TOKEN || !ADMIN_CHAT_ID) {
+            showToast("❌ الرجاء إدخال التوكن ومعرف الشات أولاً", "#e74c3c");
+            return;
+        }
+        const success = await sendTelegramMessage(ADMIN_CHAT_ID, "✅ <b>اختبار اتصال ناجح!</b>\nتم ربط متجر DH بنجاح مع تيليجرام 🚀\n\n💳 طرق الدفع المتاحة:\n💚 شام كاش\n📱 سيريتل كاش\n📲 MTN كاش\n🏦 تحويل بنكي\n💵 الدفع عند الاستلام");
+        showToast(success ? "✅ تم الاتصال بنجاح!" : "❌ فشل الاتصال", success ? "#27ae60" : "#e74c3c");
+    }
+    
+    async function sendTelegramMessage(chatId, text) {
+        if(!TELEGRAM_BOT_TOKEN || !chatId) return false;
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: 'HTML' })
+            });
+            const data = await response.json();
+            return data.ok;
+        } catch(e) { return false; }
+    }
+    
+    async function sendTelegramPhoto(chatId, photoUrl, caption) {
+        if(!TELEGRAM_BOT_TOKEN || !chatId) return false;
+        const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`;
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, photo: photoUrl, caption: caption, parse_mode: 'HTML' })
+            });
+            return (await response.json()).ok;
+        } catch(e) { return false; }
+    }
+
+    // ========== حفظ البيانات ==========
+    function saveData() {
+        if(currentUser && currentUser.username !== ADMIN_USERNAME) {
+            localStorage.setItem(`cart_${currentUser.username}`, JSON.stringify(cart));
+            localStorage.setItem(`wishlist_${currentUser.username}`, JSON.stringify(wishlist));
+            localStorage.setItem(`orders_${currentUser.username}`, JSON.stringify(ordersHistory));
+        }
+        localStorage.setItem('ecom_products', JSON.stringify(products));
+    }
+
+    function loadUserData() {
+        if(currentUser && currentUser.username !== ADMIN_USERNAME) {
+            cart = JSON.parse(localStorage.getItem(`cart_${currentUser.username}`) || '[]');
+            wishlist = JSON.parse(localStorage.getItem(`wishlist_${currentUser.username}`) || '[]');
+            ordersHistory = JSON.parse(localStorage.getItem(`orders_${currentUser.username}`) || '[]');
+        } else { cart = []; wishlist = []; ordersHistory = []; }
+        
+        const savedProducts = localStorage.getItem('ecom_products');
+        if(savedProducts) {
+            products = JSON.parse(savedProducts);
+            productIdCounter = Math.max(...products.map(p => p.id), 6) + 1;
+        }
+        updateAllUI();
+    }
+
+    function updateAllUI() {
+        updateCartUI();
+        updateWishlistUI();
+        updateOrdersUI();
+        updateStats();
+        renderProducts();
+    }
+
+    function updateCartUI() {
+        const count = cart.reduce((s,i)=> s + i.quantity, 0);
+        document.getElementById('cartCount').innerText = count;
+        document.getElementById('cartTotal').innerText = cart.reduce((s,i)=> s + (i.price * i.quantity), 0).toLocaleString();
+        const container = document.getElementById('cartItemsList');
+        if(container) {
+            if(cart.length === 0) { container.innerHTML = "<p>السلة فارغة 🛒</p>"; return; }
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <span style="display:flex; align-items:center; gap:10px;">
+                        ${item.image ? `<img src="${item.image}" style="width:40px; height:40px; border-radius:10px; object-fit:cover;">` : '<span style="font-size:2rem;">📦</span>'}
+                        ${item.name}
+                    </span>
+                    <div class="quantity-control">
+                        <button onclick="updateQuantity(${item.id}, -1)" class="qty-btn">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${item.id}, 1)" class="qty-btn">+</button>
+                    </div>
+                    <span>${(item.price * item.quantity).toLocaleString()} ل.س</span>
+                    <button onclick="removeFromCart(${item.id})" style="width:auto; background:#e67e22;">حذف</button>
+                </div>
+            `).join('');
+        }
+    }
+
+    function updateWishlistUI() {
+        document.getElementById('wishlistCount').innerText = wishlist.length;
+        const container = document.getElementById('wishlistItems');
+        if(container) {
+            if(wishlist.length === 0) { container.innerHTML = "<p>قائمة المفضلة فارغة ❤️</p>"; return; }
+            container.innerHTML = wishlist.map(item => `
+                <div class="cart-item">
+                    <span style="display:flex; align-items:center; gap:10px;">${item.image ? `<img src="${item.image}" style="width:40px; height:40px; border-radius:10px; object-fit:cover;">` : '📦'}${item.name}</span>
+                    <span>${item.price.toLocaleString()} ل.س</span>
+                    <button onclick="addToCartFromWishlist(${item.id})" style="width:auto; background:#27ae60;">إضافة للسلة</button>
+                    <button onclick="toggleWishlist(${item.id})" style="width:auto; background:#e74c3c;">حذف</button>
+                </div>
+            `).join('');
+        }
+    }
+
+    function updateOrdersUI() {
+        const container = document.getElementById('ordersList');
+        if(container) {
+            if(ordersHistory.length === 0) { container.innerHTML = "<p>لا توجد طلبات سابقة 📋</p>"; return; }
+            const paymentNames = { 'shamcash': 'شام كاش 💚', 'syriatel': 'سيريتل كاش 📱', 'mtn': 'MTN كاش 📲', 'bank': 'تحويل بنكي 🏦', 'cod': 'الدفع عند الاستلام 💵' };
+            container.innerHTML = ordersHistory.map((order, index) => `
+                <div style="border:1px solid #ddd; padding:15px; margin:10px 0; border-radius:15px;">
+                    <strong>طلب #${order.orderNumber || (index + 1)}</strong> - ${new Date(order.date).toLocaleDateString('ar-SY')}
+                    <br>الحالة: <span style="color:${order.status === 'مكتمل' ? 'green' : 'orange'}">${order.status || 'قيد المعالجة'}</span>
+                    <br>الدفع: ${paymentNames[order.paymentMethod] || order.paymentMethod || 'غير محدد'}
+                    <br>المنتجات: ${order.items.map(i => i.name).join(', ')}
+                    <br>الإجمالي: ${order.total.toLocaleString()} ل.س
+                </div>
+            `).join('');
+        }
+    }
+
+    function updateStats() {
+        const users = getUsers();
+        document.getElementById('totalProducts').innerText = products.length;
+        document.getElementById('totalOrders').innerText = ordersHistory.length;
+        document.getElementById('totalUsers').innerText = Object.keys(users).length;
+    }
+
+    // ========== وظائف المنتجات ==========
+    window.updateQuantity = function(id, change) {
+        const item = cart.find(i => i.id === id);
+        if(item) {
+            item.quantity += change;
+            if(item.quantity <= 0) cart = cart.filter(i => i.id !== id);
+            saveData(); updateAllUI();
+        }
+    };
+    window.removeFromCart = function(id) { cart = cart.filter(i => i.id !== id); saveData(); updateAllUI(); };
+    window.toggleWishlist = function(productId) {
+        if(!currentUser) { showToast("🔐 الرجاء تسجيل الدخول أولاً", "#c0392b"); return; }
+        const product = products.find(p => p.id === productId);
+        const index = wishlist.findIndex(i => i.id === productId);
+        if(index === -1) { wishlist.push({ ...product }); showToast("❤️ تمت الإضافة للمفضلة", "#e74c3c"); }
+        else { wishlist.splice(index, 1); showToast("تم الحذف من المفضلة", "#aaa"); }
+        saveData(); updateAllUI();
+    };
+    window.addToCartFromWishlist = function(productId) {
+        const product = wishlist.find(p => p.id === productId);
+        if(product) addToCart(product);
+    };
+    window.addToCart = function(product) {
+        if(!currentUser) { showToast("🔐 الرجاء تسجيل الدخول أولاً", "#c0392b"); return; }
+        if(currentUser.username === ADMIN_USERNAME) { showToast("الأدمن لا يمكنه الشراء", "#c0392b"); return; }
+        const existing = cart.find(i => i.id === product.id);
+        if(existing) existing.quantity++;
+        else cart.push({ ...product, quantity: 1 });
+        saveData(); updateAllUI();
+        showToast("✓ تمت الإضافة", "#27ae60");
+    };
+    window.openComments = function(productId) {
+        if(!currentUser) { showToast("🔐 الرجاء تسجيل الدخول للتعليق", "#c0392b"); return; }
+        const product = products.find(p => p.id === productId);
+        if(!product) return;
+        document.getElementById('commentsProductInfo').innerHTML = `
+            <div style="text-align:center; margin-bottom:20px;">
+                ${product.image ? `<img src="${product.image}" style="width:100px; height:100px; border-radius:20px; object-fit:cover;">` : ''}
+                <h3>${product.name}</h3>
+                <div>${'⭐'.repeat(product.rating)} <span class="comments-count">${getProductComments(productId).length} تعليق</span></div>
+            </div>`;
+        document.getElementById('addCommentSection').style.display = currentUser.isAdmin ? 'none' : 'block';
+        if(!currentUser.isAdmin) { document.getElementById('commentText').value = ''; commentRating = 0; }
+        renderComments(productId);
+        document.getElementById('commentsModal').style.display = 'flex';
+        document.getElementById('commentsModal').dataset.productId = productId;
+    };
+
+    function submitComment() {
+        const productId = parseInt(document.getElementById('commentsModal').dataset.productId);
+        const text = document.getElementById('commentText').value.trim();
+        if(!text) { showToast("❌ الرجاء كتابة تعليق", "#e74c3c"); return; }
+        if(commentRating === 0) { showToast("❌ الرجاء اختيار تقييم بالنجوم", "#e74c3c"); return; }
+        addProductComment(productId, currentUser.username, currentUser.name, commentRating, text);
+        if(TELEGRAM_BOT_TOKEN && ADMIN_CHAT_ID) {
+            const product = products.find(p => p.id === productId);
+            sendTelegramMessage(ADMIN_CHAT_ID, `💬 <b>تعليق جديد</b>\n🛍️ ${product.name}\n👤 ${currentUser.name}\n⭐ ${'⭐'.repeat(commentRating)}\n📝 ${text}`);
+        }
+        renderComments(productId);
+        document.getElementById('commentText').value = '';
+        commentRating = 0;
+        document.querySelectorAll('#commentStarRating .star').forEach(star => { star.style.color = ''; star.classList.remove('active'); });
+        updateAllUI();
+        showToast("✅ تم نشر تعليقك بنجاح", "#27ae60");
+    }
+
+    function showToast(msg, bg) {
+        let toast = document.getElementById('dynamicToast');
+        if(!toast) {
+            toast = document.createElement('div');
+            toast.id = 'dynamicToast';
+            toast.style.cssText = 'position:fixed; bottom:20px; left:50%; transform:translateX(-50%); color:white; padding:12px 24px; border-radius:60px; z-index:9999; transition:opacity 0.3s; box-shadow:0 5px 20px rgba(0,0,0,0.3);';
+            document.body.appendChild(toast);
+        }
+        toast.style.backgroundColor = bg;
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        toast.style.opacity = '1';
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.style.display = 'none', 300); }, 2000);
+    }
+
+    // ========== رفع الصور ==========
+    window.handleProductImageUpload = function(event) {
+        const file = event.target.files[0];
+        if(!file || !file.type.match('image.*')) return;
+        if(file.size > 5 * 1024 * 1024) { showToast("❌ حجم الصورة كبير جداً", "#e74c3c"); return; }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            tempProductImage = e.target.result;
+            const container = document.getElementById('productImageContainer');
+            let previewImg = container.querySelector('.image-preview');
+            if(!previewImg) { previewImg = document.createElement('img'); previewImg.className = 'image-preview'; container.appendChild(previewImg); }
+            previewImg.src = tempProductImage;
+            document.getElementById('uploadIcon').style.display = 'none';
+            document.getElementById('uploadText').textContent = file.name;
+            document.getElementById('fileInfo').textContent = `الحجم: ${(file.size / 1024).toFixed(1)} كيلوبايت`;
+            document.getElementById('removeProductImageBtn').style.display = 'flex';
+            container.classList.add('has-image');
+        };
+        reader.readAsDataURL(file);
+    };
+    window.removeProductImage = function(event) {
+        event.stopPropagation();
+        tempProductImage = null;
+        const container = document.getElementById('productImageContainer');
+        const previewImg = container.querySelector('.image-preview');
+        if(previewImg) previewImg.remove();
+        document.getElementById('uploadIcon').style.display = '';
+        document.getElementById('uploadText').textContent = 'انقر هنا لرفع صورة المنتج';
+        document.getElementById('fileInfo').textContent = 'الصيغ المدعومة: JPG, PNG, GIF, WebP';
+        document.getElementById('removeProductImageBtn').style.display = 'none';
+        container.classList.remove('has-image');
+        document.getElementById('newProductImage').value = '';
+    };
+    window.handleProfileImageUpload = function(event) {
+        const file = event.target.files[0];
+        if(!file || !file.type.match('image.*')) return;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const container = document.getElementById('profileImageContainer');
+            const oldPreview = container.querySelector('.image-preview');
+            if(oldPreview) oldPreview.remove();
+            const previewImg = document.createElement('img');
+            previewImg.className = 'image-preview';
+            previewImg.src = e.target.result;
+            container.appendChild(previewImg);
+            container.querySelector('.upload-placeholder').textContent = file.name;
+            container.classList.add('has-image');
+        };
+        reader.readAsDataURL(file);
+    };
+
+    function renderProducts() {
+        const container = document.getElementById('productsContainer');
+        if(!container) return;
+        renderProductsGrid(container, currentUser && currentUser.isAdmin);
+    }
+    
+    function renderProductsGrid(container, isAdmin) {
+        const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+        const sortBy = document.getElementById('sortSelect')?.value || 'default';
+        let filteredProducts = products.filter(p => p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm));
+        switch(sortBy) {
+            case 'price-asc': filteredProducts.sort((a,b) => a.price - b.price); break;
+            case 'price-desc': filteredProducts.sort((a,b) => b.price - a.price); break;
+            case 'name': filteredProducts.sort((a,b) => a.name.localeCompare(b.name)); break;
+            case 'rating': filteredProducts.sort((a,b) => b.rating - a.rating); break;
+        }
+        if(filteredProducts.length === 0) { container.innerHTML = '<p style="text-align:center; grid-column:1/-1; padding:40px;">لا توجد منتجات 🔍</p>'; return; }
+        container.innerHTML = filteredProducts.map(p => {
+            const inCart = cart.find(i=> i.id === p.id);
+            const inWishlist = wishlist.find(i => i.id === p.id);
+            const commentsCount = getProductComments(p.id).length;
+            let btns = isAdmin ? 
+                `<button onclick="editProduct(${p.id})" style="background:#f39c12; margin-top:5px;">✏️ تعديل</button><button onclick="deleteProduct(${p.id})" style="background:#e74c3c; margin-top:5px;">🗑️ حذف</button>` :
+                `<button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&#39;")})' ${p.stock===0?'disabled':''}>${p.stock===0?'نفذ المخزون':(inCart?`✓ في السلة (${inCart.quantity})`:'➕ إضافة للسلة')}</button><button onclick="openComments(${p.id})" style="background:#3498db; margin-top:5px;">💬 تعليقات (${commentsCount})</button>`;
+            return `<div class="product-card">
+                ${!isAdmin?`<button class="wishlist-icon ${inWishlist?'active':''}" onclick="toggleWishlist(${p.id})">${inWishlist?'❤️':'🤍'}</button>`:''}
+                <div class="product-img-container">${p.image?`<img src="${p.image}" class="product-img" alt="${p.name}">`:'<span class="product-img-placeholder">🖼️</span>'}</div>
+                <div class="product-title">${p.name}</div>
+                ${p.description?`<p style="color:#7f8c8d; font-size:0.9rem; margin:5px 0;">${p.description}</p>`:''}
+                <div class="product-rating">${'⭐'.repeat(p.rating)}${p.rating===0?'<span style="color:#95a5a6;">(0)</span>':''} <span class="comments-count">${commentsCount} 💬</span></div>
+                <div class="product-price">${p.price.toLocaleString()} ل.س</div>
+                <div style="color:#7f8c8d; margin:5px 0;">📦 ${p.stock} قطعة</div>
+                ${btns}
+            </div>`;
+        }).join('');
+    }
+    
+    window.deleteProduct = function(id) { if(confirm('حذف المنتج؟')) { products = products.filter(p => p.id !== id); saveData(); updateAllUI(); showToast("🗑️ تم الحذف", "#e74c3c"); } };
+    window.editProduct = function(id) {
+        const p = products.find(pr => pr.id === id);
+        if(!p) return;
+        document.getElementById('newProductName').value = p.name;
+        document.getElementById('newProductPrice').value = p.price;
+        document.getElementById('newProductCategory').value = p.category;
+        document.getElementById('newProductStock').value = p.stock;
+        document.getElementById('newProductDescription').value = p.description || '';
+        if(p.image) {
+            tempProductImage = p.image;
+            const container = document.getElementById('productImageContainer');
+            let previewImg = container.querySelector('.image-preview');
+            if(!previewImg) { previewImg = document.createElement('img'); previewImg.className = 'image-preview'; container.appendChild(previewImg); }
+            previewImg.src = p.image;
+            document.getElementById('uploadIcon').style.display = 'none';
+            document.getElementById('uploadText').textContent = 'الصورة الحالية';
+            document.getElementById('removeProductImageBtn').style.display = 'flex';
+            container.classList.add('has-image');
+        }
+        const saveBtn = document.getElementById('saveNewProductBtn');
+        saveBtn.textContent = '💾 تحديث المنتج';
+        saveBtn.onclick = () => {
+            if(!p) return;
+            const name = document.getElementById('newProductName').value.trim();
+            const price = parseInt(document.getElementById('newProductPrice').value);
+            if(!name || !price) { showToast("❌ املأ البيانات", "#e74c3c"); return; }
+            p.name = name; p.price = price;
+            p.category = document.getElementById('newProductCategory').value;
+            p.stock = parseInt(document.getElementById('newProductStock').value) || 0;
+            p.description = document.getElementById('newProductDescription').value.trim();
+            if(tempProductImage) p.image = tempProductImage;
+            saveData(); updateAllUI(); resetAddProductForm();
+            document.getElementById('addProductModal').style.display = 'none';
+            showToast("✅ تم التحديث", "#27ae60");
+        };
+        document.getElementById('addProductModal').style.display = 'flex';
+    };
+
+    function saveNewProduct() {
+        const name = document.getElementById('newProductName').value.trim();
+        const price = parseInt(document.getElementById('newProductPrice').value);
+        if(!name || !price) { showToast("❌ املأ البيانات", "#e74c3c"); return; }
+        if(!tempProductImage) { showToast("⚠️ ارفع صورة", "#e67e22"); return; }
+        products.push({ id: productIdCounter++, name, price, image: tempProductImage, rating: 0, category: document.getElementById('newProductCategory').value, stock: parseInt(document.getElementById('newProductStock').value) || 10, description: document.getElementById('newProductDescription').value.trim() });
+        saveData(); updateAllUI(); resetAddProductForm();
+        document.getElementById('addProductModal').style.display = 'none';
+        showToast("✅ تمت الإضافة", "#27ae60");
+    }
+    
+    function resetAddProductForm() {
+        ['newProductName','newProductPrice','newProductStock','newProductDescription'].forEach(id => document.getElementById(id).value = id==='newProductStock'?'10':'');
+        document.getElementById('newProductCategory').value = 'إلكترونيات';
+        document.getElementById('newProductImage').value = '';
+        tempProductImage = null;
+        const container = document.getElementById('productImageContainer');
+        const previewImg = container.querySelector('.image-preview');
+        if(previewImg) previewImg.remove();
+        document.getElementById('uploadIcon').style.display = '';
+        document.getElementById('uploadText').textContent = 'انقر هنا لرفع صورة المنتج';
+        document.getElementById('fileInfo').textContent = 'الصيغ المدعومة: JPG, PNG, GIF, WebP';
+        document.getElementById('removeProductImageBtn').style.display = 'none';
+        container.classList.remove('has-image');
+        const saveBtn = document.getElementById('saveNewProductBtn');
+        saveBtn.textContent = '💾 حفظ المنتج';
+        saveBtn.onclick = saveNewProduct;
+    }
+
+    // ========== نظام المستخدمين ==========
+    const usersKey = 'ecom_users_syria_full';
+    function getUsers() { return JSON.parse(localStorage.getItem(usersKey) || '{}'); }
+    function saveUsers(users) { localStorage.setItem(usersKey, JSON.stringify(users)); }
+    function getUserProfile(username) { const users = getUsers(); return users[username]?.profile || { name: username, email: "", gov: "", village: "", area: "", phone: "", address: "", avatar: "", birthdate: "", notes: "" }; }
+    function saveUserProfile(username, profileData) {
+        const users = getUsers();
+        if(users[username]) { users[username].profile = { ...users[username].profile, ...profileData }; saveUsers(users); if(currentUser?.username === username) { currentUser.name = profileData.name || currentUser.name; updateAuthUI(); } return true; }
+        return false;
+    }
+    function register(fullName, username, password, phone, gov, village, area) {
+        const users = getUsers();
+        if(users[username]) return { success: false, msg: "❌ اسم المستخدم موجود" };
+        users[username] = { password, profile: { name: fullName, email: "", gov, village, area: area || "", phone, address: "", avatar: "", birthdate: "", notes: "" }, registeredAt: new Date().toISOString() };
+        saveUsers(users);
+        if(TELEGRAM_BOT_TOKEN && ADMIN_CHAT_ID) sendTelegramMessage(ADMIN_CHAT_ID, `👤 <b>مستخدم جديد</b>\nالاسم: ${fullName}\nالمستخدم: ${username}\nالهاتف: ${phone}\n${gov} - ${village}`);
+        return { success: true, msg: "✅ تم إنشاء الحساب!" };
+    }
+    function login(username, password) {
+        if(username === ADMIN_USERNAME && password === ADMIN_PASSWORD) { currentUser = { username: ADMIN_USERNAME, name: "الأدمن", isAdmin: true }; localStorage.setItem('currentUser_syria', JSON.stringify(currentUser)); cart = []; wishlist = []; updateAuthUI(); updateAllUI(); return { success: true, msg: "✅ دخول الأدمن" }; }
+        const users = getUsers();
+        const user = users[username];
+        if(user && user.password === password) { currentUser = { username, name: user.profile.name || username, isAdmin: false }; localStorage.setItem('currentUser_syria', JSON.stringify(currentUser)); loadUserData(); updateAuthUI(); updateAllUI(); return { success: true, msg: "✅ تم الدخول" }; }
+        return { success: false, msg: "❌ بيانات خاطئة" };
+    }
+    function logout() { currentUser = null; localStorage.removeItem('currentUser_syria'); cart = []; wishlist = []; ordersHistory = []; updateAllUI(); updateAuthUI(); renderProducts(); }
+    
+    function updateAuthUI() {
+        const section = document.getElementById('authSection');
+        const userDisplay = document.getElementById('userDisplay');
+        const profileBtn = document.getElementById('profileBtn');
+        const adminBtn = document.getElementById('adminBtn');
+        const wishlistBtn = document.getElementById('wishlistBtn');
+        const ordersBtn = document.getElementById('ordersBtn');
+        
+        if(currentUser) {
+            section.innerHTML = `<div style="text-align:center;"><div class="user-greeting">👋 مرحباً ${currentUser.name} <button id="logoutBtn" class="logout-btn">تسجيل خروج</button></div></div>`;
+            document.getElementById('logoutBtn').addEventListener('click', logout);
+            userDisplay.innerHTML = `مرحباً ${currentUser.name}`;
+            profileBtn.style.display = wishlistBtn.style.display = ordersBtn.style.display = "inline-flex";
+            adminBtn.style.display = currentUser.isAdmin ? "inline-flex" : "none";
+        } else {
+            section.innerHTML = `
+                <div class="auth-tabs"><button class="auth-tab active" id="loginTabBtn">🔐 تسجيل دخول</button><button class="auth-tab" id="registerTabBtn">✨ إنشاء حساب</button></div>
+                <div id="loginForm"><div class="form-group"><label>اسم المستخدم:</label><input type="text" id="loginUsername" class="auth-input"></div><div class="form-group"><label>كلمة المرور:</label><input type="password" id="loginPassword" class="auth-input"></div><button id="loginBtn" style="margin-top:20px;">تسجيل دخول</button><p id="loginMsg" style="margin-top:12px; text-align:center;"></p></div>
+                <div id="registerForm" style="display:none;"><div class="form-group"><label><span class="required-star">*</span> الاسم الكامل:</label><input type="text" id="regFullName" class="auth-input"></div><div class="form-group"><label><span class="required-star">*</span> اسم المستخدم:</label><input type="text" id="regUsername" class="auth-input"></div><div class="form-group"><label><span class="required-star">*</span> كلمة المرور:</label><input type="password" id="regPassword" class="auth-input"></div><div class="form-group"><label>تأكيد كلمة المرور:</label><input type="password" id="regConfirmPassword" class="auth-input"></div><div class="form-group"><label><span class="required-star">*</span> رقم الهاتف:</label><input type="text" id="regPhone" class="auth-input"></div><div class="form-group"><label><span class="required-star">*</span> المحافظة:</label><select id="regGov" class="auth-input"><option value="">-- اختر --</option><option>دمشق</option><option>ريف دمشق</option><option>حلب</option><option>حمص</option><option>حماة</option><option>اللاذقية</option><option>طرطوس</option><option>دير الزور</option><option>الحسكة</option><option>القامشلي</option><option>إدلب</option><option>السويداء</option><option>درعا</option><option>القنيطرة</option><option>الرقة</option></select></div><div class="form-group"><label><span class="required-star">*</span> الحي:</label><input type="text" id="regVillage" class="auth-input"></div><div class="form-group"><label>المنطقة:</label><input type="text" id="regArea" class="auth-input"></div><button id="registerSubmitBtn" style="background:#6c5ce7; margin-top:20px;">✨ إنشاء حساب</button><p id="registerMsg" style="margin-top:12px; text-align:center;"></p></div>`;
+            setupAuthEvents();
+            userDisplay.innerHTML = '';
+            profileBtn.style.display = adminBtn.style.display = wishlistBtn.style.display = ordersBtn.style.display = "none";
+        }
+    }
+    
+    function setupAuthEvents() {
+        document.getElementById('loginTabBtn').addEventListener('click', () => { document.getElementById('loginTabBtn').classList.add('active'); document.getElementById('registerTabBtn').classList.remove('active'); document.getElementById('loginForm').style.display='block'; document.getElementById('registerForm').style.display='none'; });
+        document.getElementById('registerTabBtn').addEventListener('click', () => { document.getElementById('registerTabBtn').classList.add('active'); document.getElementById('loginTabBtn').classList.remove('active'); document.getElementById('loginForm').style.display='none'; document.getElementById('registerForm').style.display='block'; });
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            const u = document.getElementById('loginUsername').value.trim(), p = document.getElementById('loginPassword').value;
+            if(!u||!p) { document.getElementById('loginMsg').innerText="❌ املأ الحقول"; return; }
+            const r = login(u,p);
+            document.getElementById('loginMsg').innerText = r.msg;
+            if(r.success) updateAuthUI();
+        });
+        document.getElementById('registerSubmitBtn').addEventListener('click', () => {
+            const fn = document.getElementById('regFullName').value.trim(), un = document.getElementById('regUsername').value.trim(), pw = document.getElementById('regPassword').value, cp = document.getElementById('regConfirmPassword').value, ph = document.getElementById('regPhone').value.trim(), gv = document.getElementById('regGov').value, vl = document.getElementById('regVillage').value.trim(), ar = document.getElementById('regArea').value.trim();
+            if(!fn||!un||!pw||!ph||!gv||!vl) { document.getElementById('registerMsg').innerText="❌ املأ الحقول المطلوبة"; return; }
+            if(pw!==cp) { document.getElementById('registerMsg').innerText="❌ كلمة المرور غير متطابقة"; return; }
+            if(pw.length<4) { document.getElementById('registerMsg').innerText="❌ كلمة المرور قصيرة"; return; }
+            const r = register(fn,un,pw,ph,gv,vl,ar);
+            document.getElementById('registerMsg').innerText = r.msg;
+            if(r.success) setTimeout(() => document.getElementById('loginTabBtn').click(), 1500);
+        });
+    }
+    
+    function showProfileModal() {
+        if(!currentUser) return;
+        const p = getUserProfile(currentUser.username);
+        document.getElementById('profileName').value = p.name || ''; document.getElementById('profileEmail').value = p.email || '';
+        document.getElementById('profileGov').value = p.gov || ''; document.getElementById('profileVillage').value = p.village || '';
+        document.getElementById('profileArea').value = p.area || ''; document.getElementById('profilePhone').value = p.phone || '';
+        document.getElementById('profileAddress').value = p.address || ''; document.getElementById('profileBirthdate').value = p.birthdate || '';
+        document.getElementById('profileNotes').value = p.notes || '';
+        const container = document.getElementById('profileImageContainer');
+        const oldPreview = container.querySelector('.image-preview');
+        if(oldPreview) oldPreview.remove();
+        if(p.avatar) { const img = document.createElement('img'); img.className='image-preview'; img.src=p.avatar; container.appendChild(img); container.querySelector('.upload-placeholder').textContent='انقر لتغيير الصورة'; container.classList.add('has-image'); }
+        else { container.querySelector('.upload-placeholder').textContent='انقر لرفع صورة'; container.classList.remove('has-image'); }
+        document.getElementById('profileModal').style.display = 'flex';
+    }
+    
+    function saveProfile() {
+        const pd = { name: document.getElementById('profileName').value, email: document.getElementById('profileEmail').value, gov: document.getElementById('profileGov').value, village: document.getElementById('profileVillage').value, area: document.getElementById('profileArea').value, phone: document.getElementById('profilePhone').value, address: document.getElementById('profileAddress').value, birthdate: document.getElementById('profileBirthdate').value, notes: document.getElementById('profileNotes').value };
+        const af = document.getElementById('profileAvatar').files[0];
+        if(af) { const r = new FileReader(); r.onload = function(e) { pd.avatar = e.target.result; finishProfileSave(pd); }; r.readAsDataURL(af); }
+        else finishProfileSave(pd);
+    }
+    function finishProfileSave(pd) {
+        if(saveUserProfile(currentUser.username, pd)) { currentUser.name = pd.name || currentUser.name; updateAuthUI(); showToast("✅ تم الحفظ", "#27ae60"); document.getElementById('profileModal').style.display='none'; }
+        else showToast("خطأ", "#c0392b");
+    }
+    
+    function showAdminPanel() {
+        if(!currentUser?.isAdmin) return;
+        document.getElementById('telegramToken').value = TELEGRAM_BOT_TOKEN;
+        document.getElementById('telegramChatId').value = ADMIN_CHAT_ID;
+        document.getElementById('adminShamcash').value = paymentAccounts.shamcash;
+        document.getElementById('adminSyriatel').value = paymentAccounts.syriatel;
+        document.getElementById('adminMtn').value = paymentAccounts.mtn;
+        document.getElementById('adminBank').value = paymentAccounts.bank;
+        updateTelegramStatus();
+        const users = getUsers();
+        document.getElementById('adminTotalUsers').innerText = Object.keys(users).length;
+        const container = document.getElementById('usersListContainer');
+        if(Object.keys(users).length === 0) container.innerHTML = "<p>لا يوجد مستخدمون</p>";
+        else {
+            let html = `<table class="users-table"><tr><th>المستخدم</th><th>الاسم</th><th>الهاتف</th><th>المحافظة</th><th>الحي</th><th>التسجيل</th></tr>`;
+            for(const [u,d] of Object.entries(users)) { const p=d.profile||{}; html+=`<tr><td>${u}</td><td>${p.name||'-'}</td><td>${p.phone||'-'}</td><td>${p.gov||'-'}</td><td>${p.village||'-'}</td><td>${d.registeredAt?new Date(d.registeredAt).toLocaleDateString('ar-SY'):'-'}</td></tr>`; }
+            html+=`</table>`; container.innerHTML = html;
+        }
+        document.getElementById('adminModal').style.display = 'flex';
+    }
+    
+    function exportUsersData() {
+        const users = getUsers();
+        let csv = 'المستخدم,الاسم,الهاتف,المحافظة,الحي,المنطقة,التسجيل\n';
+        for(const [u,d] of Object.entries(users)) { const p=d.profile||{}; csv+=`${u},${p.name||''},${p.phone||''},${p.gov||''},${p.village||''},${p.area||''},${d.registeredAt||''}\n`; }
+        const blob = new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+        const link = document.createElement('a'); link.href=URL.createObjectURL(blob); link.download='users.csv'; link.click();
+        showToast("✅ تم التصدير","#3498db");
+    }
+
+    // ========== ربط الأحداث ==========
+    document.getElementById('openCartBtn')?.addEventListener('click', () => { if(!currentUser) { showToast("سجل دخول أولاً","#c0392b"); return; } document.getElementById('cartModal').style.display='flex'; updateCartUI(); });
+    document.getElementById('closeCartBtn')?.addEventListener('click', () => document.getElementById('cartModal').style.display='none');
+    document.getElementById('clearCartBtn')?.addEventListener('click', () => { if(confirm('إفراغ السلة؟')) { cart=[]; saveData(); updateAllUI(); showToast("🗑️ تم الإفراغ","#e67e22"); } });
+    document.getElementById('proceedToPaymentBtn')?.addEventListener('click', proceedToPayment);
+    document.getElementById('confirmPaymentBtn')?.addEventListener('click', confirmOrder);
+    document.getElementById('backToCartBtn')?.addEventListener('click', () => { document.getElementById('paymentModal').style.display='none'; document.getElementById('cartModal').style.display='flex'; });
+    document.getElementById('closeSuccessBtn')?.addEventListener('click', () => { document.getElementById('orderSuccessModal').style.display='none'; renderProducts(); });
+    document.getElementById('profileBtn')?.addEventListener('click', showProfileModal);
+    document.getElementById('saveProfileBtn')?.addEventListener('click', saveProfile);
+    document.getElementById('closeProfileBtn')?.addEventListener('click', () => document.getElementById('profileModal').style.display='none');
+    document.getElementById('wishlistBtn')?.addEventListener('click', () => { document.getElementById('wishlistModal').style.display='flex'; updateWishlistUI(); });
+    document.getElementById('closeWishlistBtn')?.addEventListener('click', () => document.getElementById('wishlistModal').style.display='none');
+    document.getElementById('ordersBtn')?.addEventListener('click', () => { document.getElementById('ordersModal').style.display='flex'; updateOrdersUI(); });
+    document.getElementById('closeOrdersBtn')?.addEventListener('click', () => document.getElementById('ordersModal').style.display='none');
+    document.getElementById('submitCommentBtn')?.addEventListener('click', submitComment);
+    document.getElementById('closeCommentsBtn')?.addEventListener('click', () => document.getElementById('commentsModal').style.display='none');
+    document.getElementById('commentStarRating')?.addEventListener('click', (e) => {
+        if(e.target.classList.contains('star')) {
+            commentRating = parseInt(e.target.dataset.rating);
+            document.querySelectorAll('#commentStarRating .star').forEach(s => { s.style.color = parseInt(s.dataset.rating) <= commentRating ? '#f1c40f' : ''; s.classList.toggle('active', parseInt(s.dataset.rating) <= commentRating); });
+        }
+    });
+    document.getElementById('saveTelegramSettingsBtn')?.addEventListener('click', saveTelegramSettings);
+    document.getElementById('testTelegramBtn')?.addEventListener('click', testTelegramConnection);
+    document.getElementById('savePaymentAccountsBtn')?.addEventListener('click', savePaymentAccountsSettings);
+    document.getElementById('adminBtn')?.addEventListener('click', showAdminPanel);
+    document.getElementById('closeAdminBtn')?.addEventListener('click', () => document.getElementById('adminModal').style.display='none');
+    document.getElementById('exportUsersBtn')?.addEventListener('click', exportUsersData);
+    document.getElementById('saveNewProductBtn')?.addEventListener('click', saveNewProduct);
+    document.getElementById('closeAddProductBtn')?.addEventListener('click', () => { resetAddProductForm(); document.getElementById('addProductModal').style.display='none'; });
+    document.getElementById('searchInput')?.addEventListener('input', renderProducts);
+    document.getElementById('sortSelect')?.addEventListener('change', renderProducts);
+    
+    window.onclick = (e) => {
+        ['cartModal','paymentModal','orderSuccessModal','profileModal','adminModal','wishlistModal','ordersModal','commentsModal','addProductModal'].forEach(id => {
+            if(e.target === document.getElementById(id)) document.getElementById(id).style.display='none';
+        });
+    };
+    
+    // بدء التشغيل
+    const savedUser = localStorage.getItem('currentUser_syria');
+    if(savedUser) { try { currentUser = JSON.parse(savedUser); loadUserData(); updateAuthUI(); updateAllUI(); } catch(e) { currentUser = null; } }
+    updateAuthUI();
+    updateAllUI();
+    renderProducts();
+</script>
+</body>
+</html>
